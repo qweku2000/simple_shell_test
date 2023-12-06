@@ -4,7 +4,7 @@
 #include <fcntl.h>
 #include <string.h>
 
-#define BUF 1024;
+#define BUF 1024
 
 extern char** environ;
 

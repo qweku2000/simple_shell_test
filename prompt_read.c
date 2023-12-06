@@ -32,11 +32,13 @@ void prompt(info_t *info)
 
 void read_line(info_t *info)
 {
+  info->buffer = malloc(sizeof(char) * BUF);
   info->getline_bytes = getline(&info->buffer, &info->n, stdin);
 
   if (info->getline_bytes == -1)
   {
     free(info->buffer); /* Free dynamically allocated buffer */
+    perror("getline error");
     exit(0);
   }
   if (info->getline_bytes == 1 && info->buffer[0] == '\n')
@@ -47,6 +49,11 @@ void read_line(info_t *info)
 
   info->buffer_copy = strdup(info->buffer);
 
+  if (!info->buffer_copy)
+    {
+      perror("strdup error");
+      exit(EXIT_FAILURE);
+    }
   // Call hashtags(info->buffer_copy) if hashtags function is defined
 
   /* Tokenize string */
